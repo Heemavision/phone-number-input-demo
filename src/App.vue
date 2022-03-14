@@ -1,19 +1,50 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container">
+      <VuePhoneNumberInput
+        id="phoneNumber1"
+        v-model="phoneNumber"
+        color="dodgerblue"
+        :dark="dark"
+        :disabled="disabled"
+        :ignored-countries="countriesIgnored"
+        :preferred-countries="countriesList"
+        :loader="hasLoaderActive"
+        clearable
+        :error="hasErrorActive"
+        class="mb-2"
+        @update="onUpdate"
+      />
+      <b>v-model</b> : {{ phoneNumber }}
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import VuePhoneNumberInput from "vue-phone-number-input";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    VuePhoneNumberInput,
+  },
+  data() {
+    return {
+      phoneNumber: null,
+      defaultCountry: "FR",
+      countriesList: ["FR", "BE", "DE"],
+      countriesIgnored: ["AF", "AD", "AL"],
+      dark: false,
+      disabled: false,
+      hasLoaderActive: false,
+      hasErrorActive: false,
+    };
+  },
+  methods: {
+    onUpdate(payload) {
+      this.results = payload;
+    },
+  },
+};
 </script>
 
 <style>
